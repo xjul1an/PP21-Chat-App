@@ -22,6 +22,9 @@ def handle_client(conn, addr):
         print(f"[{addr[0]} at {now}]: {msg.decode()}")
         # Weiterleiten der Nachricht an andere Clients
         send_all_clients(msg, conn, addr)
+        # Protokolierung des Chatverlaufs
+        with open('history.txt', 'a+') as text_file:
+            text_file.write(f"[{addr[0]} at {now}]: {msg.decode()}\n")
 
 def send_all_clients(msg, conn, addr):
     for client in clients_list:
